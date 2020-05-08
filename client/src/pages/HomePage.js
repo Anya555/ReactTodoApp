@@ -4,7 +4,7 @@ import './homepage.css';
 const HomePage = () => {
     return(
         <>
-        <h1>Todoapp</h1>
+       
         </>
     )
 
