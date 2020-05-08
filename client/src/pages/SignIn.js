@@ -1,13 +1,33 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { Link } from "react-router-dom";
 import './signin.css';
-// import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button';
 
 const SignIn = () => {
+
+const [email, setEmail] = useState('');
+const [password, setPassword] = useState('');
+
+const handleSubmit = (e, email, password) => {
+    e.preventDefault();
+    setEmail('');
+    setPassword('');
+}
+
+const handleChange = (e) =>{
+    const {name, value} = e.target;
+
+    if (name === 'userEmail'){
+        setEmail(value);
+    }else if (name === 'userPassword'){
+        setPassword(value);
+    }
+}
+
     return (
         <>
             <div className="container">
@@ -22,15 +42,32 @@ const SignIn = () => {
                                 <Form>
                                     <Form.Group controlId="formBasicEmail">
                                         <Form.Label className="email">Email address</Form.Label>
-                                        <Form.Control type="email" placeholder="Enter email" />
+                                        <Form.Control 
+                                        type="email" 
+                                        placeholder="Enter email" 
+                                        name="userEmail"
+                                        value={email} 
+                                        onChange={(e) => handleChange(e)}
+                                        required
+                                        />
                                     </Form.Group>
 
                                     <Form.Group controlId="formBasicPassword">
                                         <Form.Label className="password">Password</Form.Label>
-                                        <Form.Control type="password" placeholder="Password" />
+                                        <Form.Control 
+                                        type="password" 
+                                        placeholder="Password" 
+                                        name="userPassword" 
+                                        value={password}
+                                        onChange={(e) => handleChange(e)}
+                                        required
+                                        />
                                     </Form.Group>
 
-                                    <Button variant="primary" type="submit">
+                                    <Button 
+                                    onClick = {(e) => {handleSubmit(e, email, password)}}
+                                    variant="primary" 
+                                    type="submit">
                                         Sign In
                                     </Button>
                                 </Form>
