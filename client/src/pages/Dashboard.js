@@ -22,7 +22,7 @@ const Dashboard = (props) => {
                   
             </Navbar>
             <br></br>
-            <h1>Hello { firebase.getCurrentUsername() }</h1>
+            <h1>{ firebase.getCurrentUsername() }</h1>
         </>
     )
     async function logout() {
