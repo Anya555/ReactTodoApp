@@ -8,6 +8,7 @@ import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button';
 
+
 const SignIn = (props) => {
 
 const [email, setEmail] = useState('');
@@ -15,8 +16,6 @@ const [password, setPassword] = useState('');
 
 const handleSubmit = (e) => {
     e.preventDefault();
-    // setEmail('');
-    // setPassword('');
 }
 
     return (
@@ -61,8 +60,17 @@ const handleSubmit = (e) => {
                                     type="submit">
                                         Sign In
                                     </Button>
-                                </Form>
+                               
 
+                                <Button 
+                                    onClick={() => {
+                                        signInWithGoogle();
+                                      }}
+                                    variant="primary" 
+                                    type="submit">
+                                        Sign In with Google
+                                    </Button>
+                                </Form>
 
                             </Card.Body>
                             <Card.Footer className="text-muted">Don't have an account? 
@@ -81,6 +89,15 @@ const handleSubmit = (e) => {
 		} catch(error) {
 			alert(error.message)
 		}
-	}
+    }
+    
+    async function  signInWithGoogle(){
+        try{
+            await firebase.signInWithGoogle()
+            props.history.replace('/dashboard')
+        }catch(error){
+            alert(error.message)
+        }
+    }
 }
 export default withRouter(SignIn);

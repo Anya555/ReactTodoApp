@@ -17,7 +17,9 @@ const Dashboard = (props) => {
         <>
             <Navbar bg="dark" variant="dark">
                 <Navbar.Brand>ToDo List</Navbar.Brand>
+            
                     <Button variant="outline-info" onClick={logout}>SignOut</Button>
+                  
             </Navbar>
             <br></br>
             <h1>Hello { firebase.getCurrentUsername() }</h1>

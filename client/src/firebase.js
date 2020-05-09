@@ -13,12 +13,21 @@ var config = {
     measurementId: "G-8RHJF6MCHS"
   };
 
+ 
+  
+
   class Firebase {
     constructor() {
       app.initializeApp(config)
       this.auth = app.auth()
       this.db = app.firestore()
     }
+
+
+   signInWithGoogle = () => {
+    const provider = new app.auth.GoogleAuthProvider();
+   return this.auth.signInWithPopup(provider);
+    };
   
     login(email, password) {
       return this.auth.signInWithEmailAndPassword(email, password)
@@ -35,15 +44,9 @@ var config = {
       })
     }
   
-    isInitialized() {
-      return new Promise(resolve => {
-        this.auth.onAuthStateChanged(resolve)
-      })
-    }
-  
     getCurrentUsername() {
       return this.auth.currentUser && this.auth.currentUser.displayName
     }
   }
-  
+
   export default new Firebase()
