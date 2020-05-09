@@ -1,10 +1,20 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import HomePage from './pages/HomePage';
+import Dashboard from './pages/Dashboard';
 import SignIn from './pages/SignIn';
 import SignUp from './pages/SignUp';
+import firebase from '../src/firebase'
 
 const App = () => {
+
+  const [firebaseInitialized, setFirebaseInitialized] = useState(false)
+
+	useEffect(() => {
+		firebase.isInitialized().then(val => {
+			setFirebaseInitialized(val)
+		})
+  })
+  
   return (
     <Router>
     <div >
@@ -14,6 +24,9 @@ const App = () => {
     </Route>
     <Route exact path='/SignUp'>
       <SignUp/>
+    </Route>
+    <Route exact path='/dashboard'>
+      <Dashboard/>
     </Route>
      </Switch>
     </div>

@@ -1,31 +1,22 @@
 import React, {useState} from 'react';
-import { Link } from "react-router-dom";
+import { Link, withRouter } from 'react-router-dom';
 import './signin.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import firebase from '../firebase';
 
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button';
 
-const SignIn = () => {
+const SignIn = (props) => {
 
 const [email, setEmail] = useState('');
 const [password, setPassword] = useState('');
 
-const handleSubmit = (e, email, password) => {
+const handleSubmit = (e) => {
     e.preventDefault();
-    setEmail('');
-    setPassword('');
-}
-
-const handleChange = (e) =>{
-    const {name, value} = e.target;
-
-    if (name === 'userEmail'){
-        setEmail(value);
-    }else if (name === 'userPassword'){
-        setPassword(value);
-    }
+    // setEmail('');
+    // setPassword('');
 }
 
     return (
@@ -39,15 +30,15 @@ const handleChange = (e) =>{
                             <Card.Header>ToDo List</Card.Header>
                             <Card.Body>
 
-                                <Form>
+                                <Form onSubmit={e => handleSubmit(e)}>
                                     <Form.Group controlId="formBasicEmail">
                                         <Form.Label className="email">Email address</Form.Label>
                                         <Form.Control 
                                         type="email" 
                                         placeholder="Enter email" 
-                                        name="userEmail"
+                                        name="email"
                                         value={email} 
-                                        onChange={(e) => handleChange(e)}
+                                        onChange={e => setEmail(e.target.value)} 
                                         required
                                         />
                                     </Form.Group>
@@ -57,15 +48,15 @@ const handleChange = (e) =>{
                                         <Form.Control 
                                         type="password" 
                                         placeholder="Password" 
-                                        name="userPassword" 
+                                        name="password" 
                                         value={password}
-                                        onChange={(e) => handleChange(e)}
+                                        onChange={e => setPassword(e.target.value)}
                                         required
                                         />
                                     </Form.Group>
 
                                     <Button 
-                                    onClick = {(e) => {handleSubmit(e, email, password)}}
+                                    onClick = {login}
                                     variant="primary" 
                                     type="submit">
                                         Sign In
@@ -83,5 +74,13 @@ const handleChange = (e) =>{
             </div>
         </>
     )
+    async function login() {
+		try {
+			await firebase.login(email, password)
+			props.history.replace('/dashboard')
+		} catch(error) {
+			alert(error.message)
+		}
+	}
 }
-export default SignIn;
+export default withRouter(SignIn);
