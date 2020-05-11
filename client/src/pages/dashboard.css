@@ -1,0 +1,13 @@
+.logout{
+    width: fit-content !important;
+}
+
+.navbar-brand{
+    text-transform: uppercase;
+    color:rgb(65, 16, 94) !important;
+    font-weight: bold;
+}
+
+nav{
+    background-color:  rgba(0,0,0,.03) !important;
+}
