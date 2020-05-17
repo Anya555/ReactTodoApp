@@ -1,54 +1,48 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './dashboard.css';
 import firebase from '../firebase';
-import { withRouter } from 'react-router-dom'
-
+import { withRouter } from 'react-router-dom';
+import ProfileImage from '../components/Image/index';
 import Navbar from 'react-bootstrap/Navbar';
 import Button from 'react-bootstrap/Button';
-import Form from 'react-bootstrap/Form'
 import { FcTodoList } from 'react-icons/fc';
 import { IoIosLogIn } from 'react-icons/io';
 
+import Card from 'react-bootstrap/Card'
+
+
 const Dashboard = (props) => {
 
-    const [file, setFile] = useState('');
+    const[todos, setTodos] = useState([]);
 
-    if (!firebase.getCurrentUsername()) {
-        alert('Please login first')
-        props.history.replace('/')
-        return null
-    }
+    useEffect(() => {displayAll()}, []);
 
-    const uploadHandler = () => {
-        console.log(file)
+    function displayAll() {
+        firebase.displayAllTodos().then(setTodos)
     }
 
     return (
+
         <>
             <Navbar>
+
                 <Navbar.Brand><FcTodoList className="list-icon" />ToDo List</Navbar.Brand>
 
                 <Button className="login logout ml-auto" onClick={logout}><IoIosLogIn className="lock" />Sign Out</Button>
 
             </Navbar>
-            <br></br>
+          
+         <br></br>
             <div className="container-fluid">
                 <div className="row">
                     <div className="col-md-2 col-sm-12">
-                        <h3>{firebase.getCurrentUsername()}</h3>
-                        <Form>
-                            <Form.Group controlId="formBasicFile">
-                                <Form.File
-                                    id="custom-file"
-                                    label="Select image"
-                                    custom
-                                    value={file}
-                                    onChange={e => setFile(e.target.value)}
-                                />
-                                <Button onClick={e => uploadHandler(e)}>Upload</Button>
-                            </Form.Group>
-
-                        </Form>
+                    
+                    <Card className="text-center user-card">
+                    <ProfileImage/>
+                    <h6>{firebase.getCurrentUsername()}</h6>
+                   </Card>
+                    
+                  
                     </div>
                 </div>
             </div>
@@ -59,5 +53,6 @@ const Dashboard = (props) => {
         await firebase.logout()
         props.history.push('/')
     }
+
 }
 export default withRouter(Dashboard);

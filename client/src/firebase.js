@@ -2,6 +2,7 @@ import app from "firebase/app";
 import "firebase/auth";
 import "firebase/firestore";
 
+
 var config = {
   apiKey: "AIzaSyALFMidi6um1KqilX1FEjxUCQhz13BnP6c",
   authDomain: "todolist-4b3b2.firebaseapp.com",
@@ -18,10 +19,15 @@ class Firebase {
   constructor() {
     app.initializeApp(config);
     this.auth = app.auth();
-    this.db = app.firestore()
+    this.db = app.firestore();
   }
 
-
+  isInitialized() {
+		return new Promise(resolve => {
+			this.auth.onAuthStateChanged(resolve)
+		})
+	}
+ 
   signInWithGoogle = () => {
     const provider = new app.auth.GoogleAuthProvider();
     return this.auth.signInWithPopup(provider);
@@ -45,6 +51,22 @@ class Firebase {
   getCurrentUsername() {
     return this.auth.currentUser && this.auth.currentUser.displayName
   }
+
+  addTodo(todo){
+    if(!this.auth.currentUser){
+     return alert("Not authorized")
+    }
+    return this.db.doc('todos/' + this.auth.currentUser.uid).set({todo})
+  }
+
+  displayAllTodos(){
+    return this.db.doc('todos/' + this.auth.currentUser.uid).get()
+  }
+
+  deleteTodo(todo){
+    return this.db.doc('todos/' + this.auth.currentUser.uid).remove({todo})
+  }
+
 }
 
 export default new Firebase()

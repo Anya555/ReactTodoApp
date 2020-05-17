@@ -11,3 +11,11 @@
 nav{
     background-color:  rgba(0,0,0,.03) !important;
 }
+
+.user-card{
+border-color:white !important;
+}
+
+img{
+    padding-bottom: 10px;
+}
