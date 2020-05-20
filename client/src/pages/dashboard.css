@@ -16,6 +16,26 @@ nav{
 border-color:white !important;
 }
 
-img{
-    padding-bottom: 10px;
+.add{
+border-radius: 100% !important;
+float:right;
+margin-right: 10px;
+font-size: large !important;
+background-color: rgb(37, 100, 116) !important;
+border-color: rgb(37, 100, 116) !important;;
+}
+
+h6{
+text-align: center;
+padding-top: 10px;
+}
+
+h5{
+  text-align: center;
+  text-transform: uppercase;;
+  font-family: Arial, Helvetica, sans-serif ;
+}
+
+.delete{
+    float:right
 }
