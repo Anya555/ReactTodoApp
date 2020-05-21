@@ -8,19 +8,15 @@ import Button from "react-bootstrap/Button";
 import { FcTodoList } from "react-icons/fc";
 import { IoIosLogIn } from "react-icons/io";
 import Card from "react-bootstrap/Card";
-import Form from "react-bootstrap/Form";
-import Image from "react-bootstrap/Image";
 import Moment from "react-moment";
 import { BsTrashFill } from "react-icons/bs";
-import firebase from "firebase";
-import FileUploader from "react-firebase-file-uploader";
-import { FcCompactCamera } from "react-icons/fc";
+import Modal from "react-bootstrap/Modal";
 
 const Dashboard = (props) => {
   const [todos, setTodos] = useState([]);
-  // const [avatar, setAvatar] = useState("");
-  // const [avatarURL, setAvatarURL] = useState("");
-
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
   const date = new Date();
 
   useEffect(() => {
@@ -41,16 +37,6 @@ const Dashboard = (props) => {
     fire.deleteTodo();
   };
 
-  // const handleUploadSuccess = (filename) => {
-  //   setAvatar({ avatar: filename });
-  //   firebase
-  //     .storage()
-  //     .ref("images" + fire.auth.currentUser.uid)
-  //     .child(filename)
-  //     .getDownloadURL()
-  //     .then((url) => setAvatarURL({ avatarURL: url }));
-  // };
-
   return (
     <>
       <Navbar>
@@ -61,28 +47,6 @@ const Dashboard = (props) => {
           <h6>{fire.getCurrentUsername()}</h6>
         </Navbar.Brand>
         <ProfileImage />
-        {/* <Form>
-          <Image
-            roundedCircle
-            src={avatarURL || "./images/avatar.jpg"}
-            height="80px"
-            width="80px"
-          />
-          <label>
-            <FcCompactCamera className="camera" />
-
-            <FileUploader
-              hidden
-              accept="image/*"
-              name="avatar"
-              randomizeFilename
-              storageRef={firebase
-                .storage()
-                .ref("images" + fire.auth.currentUser.uid)}
-              onUploadSuccess={handleUploadSuccess}
-            />
-          </label>
-        </Form> */}
         <Button className="login logout ml-auto" onClick={logout}>
           <IoIosLogIn className="lock" />
           Sign Out
@@ -91,36 +55,45 @@ const Dashboard = (props) => {
 
       <br></br>
 
-      <div className="container-fluid">
+      <div className="container">
         <div className="row">
           <div className="col-md-8 offset-sm-2">
             <h5 className="moment">
               <Moment format="dddd, MMMM Do">{date}</Moment>
             </h5>
           </div>
-
           <div className="col-md-2 col-sm-12">
             <Link to="/CreateTodo">
               <Button className="add">+</Button>
             </Link>
           </div>
-
           <div className="col-md-12">
             <hr></hr>
           </div>
+          <br></br>
+          <br></br>
+          <br></br>
 
           {todos.map((todo) => {
             return (
-              <div className="col-md-4 col-sm-12">
-                <Card key={todo.id}>
-                  <Card.Header>
-                    {todo.title}
-                    <BsTrashFill className="delete" onClick={deleteFromList} />
-                  </Card.Header>
-                  <Card.Body>
-                    <Card.Text>{todo.body}</Card.Text>
-                  </Card.Body>
+              <div className="col-md-3 col-sm-12">
+                <Card key={todo.id} className="todo-card">
+                  {todo.title}
+                  <br></br>
+                  <Button variant="link" onClick={handleShow} className="view">
+                    View
+                  </Button>
                 </Card>
+                <Modal show={show} onHide={handleClose} animation={false}>
+                  <Modal.Header closeButton>
+                    <Modal.Title>{todo.title}</Modal.Title>
+                  </Modal.Header>
+                  <Modal.Body>{todo.body}</Modal.Body>
+                  <Modal.Footer>
+                    <BsTrashFill className="delete" onClick={deleteFromList} />
+                  </Modal.Footer>
+                </Modal>
+
                 <br></br>
               </div>
             );
@@ -129,10 +102,6 @@ const Dashboard = (props) => {
       </div>
     </>
   );
-
-  // async function uploadImage() {
-  //   await fire.uploadImage(avatar);
-  // }
   async function logout() {
     await fire.logout();
     props.history.push("/");
