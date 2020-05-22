@@ -38,11 +38,11 @@ h5 {
 
 .delete {
   float: right;
-  color: red;
+  color: rgb(37, 100, 116) !important;
 }
 
 .todo-card {
-  background-color: lightgray !important;
+  background-color: rgb(233, 229, 229) !important;
   color: black !important;
   text-align: center;
   font-weight: bold;
@@ -55,4 +55,10 @@ h5 {
   font-weight: bold !important;
   text-transform: uppercase;
   font-size: small !important;
+}
+
+.title {
+  text-transform: uppercase;
+  font-size: medium !important;
+  color: rgb(37, 100, 116) !important;
 }

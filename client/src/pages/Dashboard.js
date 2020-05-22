@@ -1,40 +1,56 @@
 import React, { useState, useEffect } from "react";
-import "./dashboard.css";
-import fire from "../firebase";
 import { withRouter, Link } from "react-router-dom";
 import ProfileImage from "../components/Image/index";
 import Navbar from "react-bootstrap/Navbar";
 import Button from "react-bootstrap/Button";
+import Card from "react-bootstrap/Card";
+import TodoModal from "../components/TodoModal";
+import Moment from "react-moment";
 import { FcTodoList } from "react-icons/fc";
 import { IoIosLogIn } from "react-icons/io";
-import Card from "react-bootstrap/Card";
-import Moment from "react-moment";
-import { BsTrashFill } from "react-icons/bs";
-import Modal from "react-bootstrap/Modal";
+import firebase from "../firebase";
+import "./dashboard.css";
 
 const Dashboard = (props) => {
   const [todos, setTodos] = useState([]);
-  const [show, setShow] = useState(false);
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+
+  // moment js
   const date = new Date();
 
   useEffect(() => {
     displayAll();
   }, []);
 
+  const handleShow = (todoToShow) => {
+    const newTodos = todos.map((todo) => {
+      if (todo.id === todoToShow.id) {
+        todo.show = !todo.show;
+      }
+      return todo;
+    });
+    setTodos(newTodos);
+  };
+
+  // render all todos from firestore
   const displayAll = () => {
-    fire
+    firebase
       .displayAllTodos()
       .then((list) => {
+        list.forEach((todo) => {
+          todo.show = false;
+        });
         setTodos(list);
         console.log(list);
       })
       .catch((err) => console.log(err));
   };
 
-  const deleteFromList = () => {
-    fire.deleteTodo();
+  // delete individual todo item from firestore
+  const deleteFromList = (id) => {
+    console.log(id);
+    firebase.deleteTodo(id).then(() => {
+      displayAll();
+    });
   };
 
   return (
@@ -44,7 +60,7 @@ const Dashboard = (props) => {
           <FcTodoList className="list-icon" />
           ToDo List
           <br></br>
-          <h6>{fire.getCurrentUsername()}</h6>
+          <h6>{firebase.getCurrentUsername()}</h6>
         </Navbar.Brand>
         <ProfileImage />
         <Button className="login logout ml-auto" onClick={logout}>
@@ -80,20 +96,19 @@ const Dashboard = (props) => {
                 <Card key={todo.id} className="todo-card">
                   {todo.title}
                   <br></br>
-                  <Button variant="link" onClick={handleShow} className="view">
+                  <Button
+                    variant="link"
+                    onClick={() => handleShow(todo)}
+                    className="view"
+                  >
                     View
                   </Button>
                 </Card>
-                <Modal show={show} onHide={handleClose} animation={false}>
-                  <Modal.Header closeButton>
-                    <Modal.Title>{todo.title}</Modal.Title>
-                  </Modal.Header>
-                  <Modal.Body>{todo.body}</Modal.Body>
-                  <Modal.Footer>
-                    <BsTrashFill className="delete" onClick={deleteFromList} />
-                  </Modal.Footer>
-                </Modal>
-
+                <TodoModal
+                  todo={todo}
+                  handleShow={handleShow}
+                  deleteFromList={deleteFromList}
+                />
                 <br></br>
               </div>
             );
@@ -102,8 +117,9 @@ const Dashboard = (props) => {
       </div>
     </>
   );
+
   async function logout() {
-    await fire.logout();
+    await firebase.logout();
     props.history.push("/");
   }
 };

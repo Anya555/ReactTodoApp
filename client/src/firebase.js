@@ -77,37 +77,21 @@ class Firebase {
       });
   }
 
-  deleteTodo() {
+  deleteTodo(id) {
     return this.db
       .collection("todo" + this.auth.currentUser.uid)
-      .get()
-      .then((querySnapshot) => {
-        querySnapshot.forEach((doc) => {
-          const todo = doc.id;
-          // console.log(todo);
-          this.db
-            .collection("todo" + this.auth.currentUser.uid)
-            .doc(todo)
-            .delete()
-            .then(function () {
-              console.log("Document successfully deleted!");
-            })
-            .catch(function (error) {
-              console.error("Error removing document: ", error);
-            });
-        });
+      .doc(id)
+      .delete()
+      .then(function () {
+        console.log("Document successfully deleted!");
+      })
+      .catch(function (error) {
+        console.error("Error removing document: ", error);
       });
   }
 
-  uploadImage() {
-    return this.storage.ref("images" + this.auth.currentUser.uid);
-  }
-
-  // getImage() {
-  //   return this.storage
-  //     .ref("images" + this.auth.currentUser.uid)
-  //     .child()
-  //     .getDownloadURL();
+  // uploadImage() {
+  //   return this.storage.ref("images" + this.auth.currentUser.uid);
   // }
 }
 
