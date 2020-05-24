@@ -2,26 +2,26 @@ import React, { useState } from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
-import FileUploader from "react-firebase-file-uploader";
 import { FcTodoList } from "react-icons/fc";
 import { BsUpload } from "react-icons/bs";
 import { withRouter } from "react-router-dom";
-import fire from "../firebase";
+import firebase from "../firebase";
 import "./form.css";
 
-const Img = (props) => {
-  const [avatar, setFile] = useState("");
+const AddAvatar = (props) => {
+  const [avatar, setAvatar] = useState("");
 
   const handleInputChange = (e) => {
     const image = e.target.files[0];
-    setFile((newFile) => image);
+    setAvatar(() => image);
   };
 
   const upload = () => {
-    fire.storage
-      .ref("images" + fire.auth.currentUser.uid)
+    firebase.storage
+      .ref("images" + firebase.auth.currentUser.uid)
       .put(avatar)
-      .then(props.history.replace("./dashboard"));
+      .then(props.history.replace("/dashboard"));
+    // console.log(avatar);
   };
 
   return (
@@ -48,7 +48,6 @@ const Img = (props) => {
                           <BsUpload className="upload-icon" />
                           Select your avatar photo
                         </span>
-
                         <Form.File
                           id="custom-file"
                           hidden
@@ -70,4 +69,4 @@ const Img = (props) => {
     </>
   );
 };
-export default withRouter(Img);
+export default withRouter(AddAvatar);

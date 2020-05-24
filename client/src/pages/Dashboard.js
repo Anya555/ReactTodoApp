@@ -10,6 +10,7 @@ import Moment from "react-moment";
 import { FcTodoList } from "react-icons/fc";
 import { IoIosLogIn } from "react-icons/io";
 import firebase from "../firebase";
+import fire from "firebase";
 import "./dashboard.css";
 import { IoIosAddCircle } from "react-icons/io";
 
@@ -46,6 +47,8 @@ const Dashboard = (props) => {
         console.log(list);
       })
       .catch((err) => console.log(err));
+
+    getImgUrl();
   };
 
   // delete individual todo item from firestore
@@ -54,6 +57,20 @@ const Dashboard = (props) => {
     firebase.deleteTodo(id).then(() => {
       displayAll();
     });
+  };
+
+  // const data = props.location;
+  // console.log(data);
+
+  // display image
+  const getImgUrl = () => {
+    firebase.storage
+      .ref(
+        firebase.storage.ref().child("images" + firebase.auth.currentUser.uid)
+          .name
+      )
+      .getDownloadURL()
+      .then((url) => setImgUrl(url));
   };
 
   return (
@@ -65,7 +82,11 @@ const Dashboard = (props) => {
           <br></br>
           <h6>{firebase.getCurrentUsername()}</h6>
         </Navbar.Brand>
-        <Image src={"./images/avatar.jpg"} height="80px" width="80px" />
+        <Image
+          src={imgUrl || "./images/avatar.jpg"}
+          height="80px"
+          width="80px"
+        />
         <label>
           <Link to="/AddAvatar">
             <IoIosAddCircle className="camera" />
