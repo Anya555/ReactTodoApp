@@ -1,18 +1,21 @@
 import React, { useState, useEffect } from "react";
 import { withRouter, Link } from "react-router-dom";
-import ProfileImage from "../components/Image/index";
+// import Avatar from "../components/Avatar/index";
 import Navbar from "react-bootstrap/Navbar";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import TodoModal from "../components/TodoModal";
+import Image from "react-bootstrap/Image";
 import Moment from "react-moment";
 import { FcTodoList } from "react-icons/fc";
 import { IoIosLogIn } from "react-icons/io";
 import firebase from "../firebase";
 import "./dashboard.css";
+import { IoIosAddCircle } from "react-icons/io";
 
 const Dashboard = (props) => {
   const [todos, setTodos] = useState([]);
+  const [imgUrl, setImgUrl] = useState("");
 
   // moment js
   const date = new Date();
@@ -62,7 +65,12 @@ const Dashboard = (props) => {
           <br></br>
           <h6>{firebase.getCurrentUsername()}</h6>
         </Navbar.Brand>
-        <ProfileImage />
+        <Image src={"./images/avatar.jpg"} height="80px" width="80px" />
+        <label>
+          <Link to="/AddAvatar">
+            <IoIosAddCircle className="camera" />
+          </Link>
+        </label>
         <Button className="login logout ml-auto" onClick={logout}>
           <IoIosLogIn className="lock" />
           Sign Out
@@ -92,8 +100,8 @@ const Dashboard = (props) => {
 
           {todos.map((todo) => {
             return (
-              <div className="col-md-3 col-sm-12">
-                <Card key={todo.id} className="todo-card">
+              <div className="col-md-3 col-sm-12" key={todo.id}>
+                <Card className="todo-card">
                   {todo.title}
                   <br></br>
                   <Button

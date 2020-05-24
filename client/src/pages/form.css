@@ -53,3 +53,25 @@
 .reset {
   color: rgb(107, 74, 126);
 }
+
+.file {
+  padding: 10px;
+}
+
+.file-input-card {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.upload-icon {
+  padding-right: 10px;
+  font-size: x-large;
+  color: rgb(107, 74, 126);
+  font-weight: bolder;
+}
+
+.upload-btn {
+  width: fit-content;
+  margin: 0 auto;
+}

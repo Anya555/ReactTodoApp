@@ -5,7 +5,8 @@ import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
 import CreateTodo from "./pages/CreateTodo";
 import ResetPassword from "./pages/ResetPassword";
-import firebase from "../src/firebase";
+import AddAvatar from "./pages/AddAvatar";
+import firebase from "./firebase";
 import Spinner from "react-bootstrap/Spinner";
 
 const App = () => {
@@ -35,6 +36,9 @@ const App = () => {
           </Route>
           <Route exact path="/ResetPassword">
             <ResetPassword />
+          </Route>
+          <Route exact path="/AddAvatar">
+            <AddAvatar />
           </Route>
         </Switch>
       </div>

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link, withRouter } from "react-router-dom";
-import "./signin.css";
+import "./form.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import firebase from "../firebase";
 

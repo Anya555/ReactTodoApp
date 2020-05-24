@@ -89,10 +89,6 @@ class Firebase {
         console.error("Error removing document: ", error);
       });
   }
-
-  // uploadImage() {
-  //   return this.storage.ref("images" + this.auth.currentUser.uid);
-  // }
 }
 
 export default new Firebase();

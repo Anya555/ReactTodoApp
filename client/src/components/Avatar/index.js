@@ -1,6 +1,4 @@
 import React, { Component } from "react";
-import axios from "axios";
-import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Image from "react-bootstrap/Image";
 import firebase from "firebase";
@@ -9,7 +7,7 @@ import { FcCompactCamera } from "react-icons/fc";
 import "./style.css";
 import fire from "../../firebase";
 
-class ProfileImage extends Component {
+class Avatar extends Component {
   state = {
     avatar: "",
     avatarURL: "",
@@ -40,23 +38,17 @@ class ProfileImage extends Component {
       .getDownloadURL()
       .then((url) => this.setState({ avatarURL: url }));
   };
+
   render() {
     return (
       <>
         <Form>
-          <Image
+          {/* <Image
             roundedCircle
             src={this.state.avatarURL || "./images/avatar.jpg"}
             height="80px"
             width="80px"
-          />
-          {/* <Form.Group controlId="formBasicFile">
-                        <Form.File
-                            id="custom-file"
-                            onChange={this.fileChangedHandler}
-                        />
-                        <Button onClick={this.uploadHandler}>Upload image</Button>
-                    </Form.Group> */}
+          /> */}
 
           <label>
             <FcCompactCamera className="camera" />
@@ -77,4 +69,4 @@ class ProfileImage extends Component {
   }
 }
 
-export default ProfileImage;
+export default Avatar;

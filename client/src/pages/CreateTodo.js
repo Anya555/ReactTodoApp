@@ -5,7 +5,7 @@ import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { FcTodoList } from "react-icons/fc";
-import "./signin.css";
+import "./form.css";
 
 const CreateTodo = (props) => {
   const [formObject, setFormObject] = useState({});
@@ -29,23 +29,25 @@ const CreateTodo = (props) => {
                 TODO LIST
               </Card.Header>
               <Card.Body>
-                <Form onSubmit={(e) => e.preventDefault}>
+                <Form onSubmit={(e) => e.preventDefault()}>
                   <Form.Label>Add title</Form.Label>
-                  <Form.Control
-                    type="text"
-                    name="title"
-                    onChange={handleInputChange}
-                    required
-                  ></Form.Control>
+                  <Form.Group>
+                    <Form.Control
+                      type="text"
+                      name="title"
+                      onChange={handleInputChange}
+                    ></Form.Control>
+                  </Form.Group>
                   <br></br>
-                  <Form.Control
-                    as="textarea"
-                    rows="7"
-                    type="text"
-                    name="body"
-                    onChange={handleInputChange}
-                    required
-                  ></Form.Control>
+                  <Form.Group>
+                    <Form.Control
+                      as="textarea"
+                      rows="7"
+                      type="text"
+                      name="body"
+                      onChange={handleInputChange}
+                    ></Form.Control>
+                  </Form.Group>
                   <br></br>
                   <Button className="login add-to-list" onClick={addTodo}>
                     Add to list

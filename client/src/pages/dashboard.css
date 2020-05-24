@@ -62,3 +62,12 @@ h5 {
   font-size: medium !important;
   color: rgb(37, 100, 116) !important;
 }
+
+.camera {
+  font-size: x-large;
+  z-index: 100;
+  margin-top: 20px;
+  margin-left: -25px;
+  position: fixed;
+  color: black;
+}

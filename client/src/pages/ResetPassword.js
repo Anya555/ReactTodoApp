@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { withRouter } from "react-router-dom";
-import "./signin.css";
+import { Link } from "react-router-dom";
+import "./form.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import firebase from "../firebase";
 import swal from "sweetalert";
@@ -9,7 +9,7 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import { FcTodoList } from "react-icons/fc";
 
-const ResetPassword = (props) => {
+const ResetPassword = () => {
   const [email, setEmail] = useState("");
   const [emailSent, setEmailSent] = useState(false);
 
@@ -27,13 +27,11 @@ const ResetPassword = (props) => {
           button: "Ok",
         });
       })
-      .then(() => {
-        props.history.replace("/");
-      })
       .catch((err) => {
-        alert(err);
+        alert("Please enter email address to receive a link to reset password");
       });
   };
+
   return (
     <>
       <div className="container">
@@ -64,11 +62,15 @@ const ResetPassword = (props) => {
                       required
                     />
                   </Form.Group>
+                  <br></br>
                   <Button onClick={sendResetEmail} className="login">
-                    Submit
+                    Submit email
                   </Button>
                 </Form>
               </Card.Body>
+              <Card.Footer>
+                <Link to="/">Return to Sign In</Link>
+              </Card.Footer>
             </Card>
           </div>
         </div>
@@ -76,4 +78,4 @@ const ResetPassword = (props) => {
     </>
   );
 };
-export default withRouter(ResetPassword);
+export default ResetPassword;
