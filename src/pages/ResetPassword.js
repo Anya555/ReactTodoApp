@@ -13,6 +13,8 @@ const ResetPassword = () => {
   const [email, setEmail] = useState("");
   const [emailSent, setEmailSent] = useState(false);
 
+  // sends email with reset password link to user after email is submitted
+  // swal - dependency to show email confirmation
   const sendResetEmail = (event) => {
     event.preventDefault();
     firebase.auth

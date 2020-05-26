@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { withRouter, Link } from "react-router-dom";
-// import Avatar from "../components/Avatar/index";
 import Navbar from "react-bootstrap/Navbar";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
@@ -9,9 +8,9 @@ import Image from "react-bootstrap/Image";
 import Moment from "react-moment";
 import { FcTodoList } from "react-icons/fc";
 import { IoIosLogIn } from "react-icons/io";
+import { IoIosAddCircle } from "react-icons/io";
 import firebase from "../firebase";
 import "./dashboard.css";
-import { IoIosAddCircle } from "react-icons/io";
 
 const Dashboard = (props) => {
   const [todos, setTodos] = useState([]);
@@ -22,8 +21,10 @@ const Dashboard = (props) => {
 
   useEffect(() => {
     displayAll();
+    getImgUrl();
   }, []);
 
+  // handles logic that opens and closes modal on click, that holds todo info
   const handleShow = (todoToShow) => {
     const newTodos = todos.map((todo) => {
       if (todo.id === todoToShow.id) {
@@ -46,7 +47,6 @@ const Dashboard = (props) => {
         console.log(list);
       })
       .catch((err) => console.log(err));
-    getImgUrl();
   };
 
   // delete individual todo item from firestore
@@ -57,7 +57,7 @@ const Dashboard = (props) => {
     });
   };
 
-  // display image
+  // display user avatar image from firebase storage
   const getImgUrl = () => {
     firebase.storage
       .ref(
@@ -81,10 +81,11 @@ const Dashboard = (props) => {
           src={imgUrl || "./images/avatar.jpg"}
           height="80px"
           width="80px"
+          roundedCircle
         />
         <label>
           <Link to="/AddAvatar">
-            <IoIosAddCircle className="camera" />
+            <IoIosAddCircle className="addImg" />
           </Link>
         </label>
         <Button className="login logout ml-auto" onClick={logout}>
@@ -97,8 +98,8 @@ const Dashboard = (props) => {
 
       <div className="container">
         <div className="row">
-          <div className="col-md-8 offset-sm-2">
-            <h5 className="moment">
+          <div className="col-md-8 offset-sm-2 moment">
+            <h5>
               <Moment format="dddd, MMMM Do">{date}</Moment>
             </h5>
           </div>

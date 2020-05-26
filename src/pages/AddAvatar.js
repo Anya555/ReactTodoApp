@@ -16,12 +16,14 @@ const AddAvatar = (props) => {
     setAvatar(() => image);
   };
 
+  // uploads image to firebase storage
   const upload = () => {
     firebase.storage
       .ref("images" + firebase.auth.currentUser.uid)
       .put(avatar)
-      .then(props.history.replace("/dashboard"));
-    // console.log(avatar);
+      .then(() => {
+        props.history.replace("/dashboard");
+      });
   };
 
   return (

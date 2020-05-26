@@ -42,8 +42,8 @@ h5 {
 }
 
 .todo-card {
-  background-color: rgb(233, 229, 229) !important;
-  color: black !important;
+  background-color: rgb(171, 169, 173) !important;
+  color: white !important;
   text-align: center;
   font-weight: bold;
   text-transform: uppercase;
@@ -51,7 +51,7 @@ h5 {
 }
 
 .view {
-  color: rgb(37, 100, 116) !important;
+  color: rgb(84, 158, 177) !important;
   font-weight: bold !important;
   text-transform: uppercase;
   font-size: small !important;
@@ -63,7 +63,7 @@ h5 {
   color: rgb(37, 100, 116) !important;
 }
 
-.camera {
+.addImg {
   font-size: x-large;
   z-index: 100;
   margin-top: 20px;

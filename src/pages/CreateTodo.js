@@ -15,6 +15,7 @@ const CreateTodo = (props) => {
     setFormObject({ ...formObject, [name]: value });
   };
 
+  // adds todo to firebase storage
   const addToDb = (e) => {
     e.preventDefault();
     firebase
@@ -69,14 +70,6 @@ const CreateTodo = (props) => {
       </div>
     </>
   );
-  // async function addTodo() {
-  //   try {
-  //     await firebase.addTodo(formObject);
-  //     props.history.replace("/dashboard");
-  //   } catch (error) {
-  //     alert(error.message);
-  //   }
-  // }
 };
 
 export default withRouter(CreateTodo);
