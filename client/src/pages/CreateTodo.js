@@ -15,6 +15,13 @@ const CreateTodo = (props) => {
     setFormObject({ ...formObject, [name]: value });
   };
 
+  const addToDb = (e) => {
+    e.preventDefault();
+    firebase
+      .addTodo(formObject)
+      .then(() => props.history.replace("/dashboard"));
+  };
+
   return (
     <>
       <div className="container">
@@ -29,14 +36,15 @@ const CreateTodo = (props) => {
                 TODO LIST
               </Card.Header>
               <Card.Body>
-                <Form onSubmit={(e) => e.preventDefault()}>
+                <Form onSubmit={addToDb}>
                   <Form.Label>Add title</Form.Label>
                   <Form.Group>
                     <Form.Control
                       type="text"
                       name="title"
                       onChange={handleInputChange}
-                    ></Form.Control>
+                      required
+                    />
                   </Form.Group>
                   <br></br>
                   <Form.Group>
@@ -46,10 +54,11 @@ const CreateTodo = (props) => {
                       type="text"
                       name="body"
                       onChange={handleInputChange}
-                    ></Form.Control>
+                      required
+                    />
                   </Form.Group>
                   <br></br>
-                  <Button className="login add-to-list" onClick={addTodo}>
+                  <Button className="login add-to-list" type="submit">
                     Add to list
                   </Button>
                 </Form>
@@ -60,14 +69,14 @@ const CreateTodo = (props) => {
       </div>
     </>
   );
-  async function addTodo() {
-    try {
-      await firebase.addTodo(formObject);
-      props.history.replace("/dashboard");
-    } catch (error) {
-      alert(error.message);
-    }
-  }
+  // async function addTodo() {
+  //   try {
+  //     await firebase.addTodo(formObject);
+  //     props.history.replace("/dashboard");
+  //   } catch (error) {
+  //     alert(error.message);
+  //   }
+  // }
 };
 
 export default withRouter(CreateTodo);
