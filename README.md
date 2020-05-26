@@ -17,4 +17,3 @@ Technologies used:
 - Firebase authentication
 - Firebase database (for storing todo collections for authenticated users)
 - Firebase storage (for storing images for authenticated users)
-- Firebase functions (originally planned to upload images with created REST Endpoint but ended up not using)
