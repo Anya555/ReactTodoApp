@@ -4,7 +4,7 @@ ReactTodoApp is full auth react application that lets user do the following:
 
 - create account with email and password
 - login with email and password or google account
-- reset password if forgotten
+- reset password
 - upload avatar image
 - add todo to the list, view and delete from list
 
