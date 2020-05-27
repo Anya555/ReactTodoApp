@@ -17,3 +17,4 @@ Technologies used:
 - Firebase authentication
 - Firebase database (for storing todo collections for authenticated users)
 - Firebase storage (for storing images for authenticated users)
+- Deployment: heroku
